@@ -2,6 +2,7 @@ var song;
 var fft;
 var button;
 var mysong;
+var myImage;
 
 
 
@@ -19,6 +20,8 @@ function preload(){
   // put preload code here
   song = loadSound("./assets/mytown.mp3");
   mysong = loadSound('./assets/moonlight.mp3');
+  myImage = loadImage("./assets/citynight.jpg");
+
 }
 
 function setup() {
@@ -36,14 +39,23 @@ function setup() {
   fft = new p5.FFT(0,256);
   //w = width/256;
 
+
 }
 
 function draw() {
   // put drawing code here
   background(0);
+  image(myImage, 0, 0, width, height);
   var spectrum = fft.analyze();
   noStroke();
-  translate(width/2,height/2);
+
+  fill('white');
+
+  text('Click toggle button to change music',20,height-50);
+  textSize(26);
+
+
+  translate(width/2,height/5);
 
    if (song.isPlaying()){
 
@@ -73,12 +85,15 @@ function draw() {
       var y = r*sin(angle);
       strokeWeight(1);
       stroke(255,i,255);
-      line(0,0,x,y);
+      //line(0,0,x,y);
+      fill(255,i,255);
+      ellipse(x,y,5 );
     }
   }
 
   myRate = map(mouseY,0, height,0,2);
   song.rate(myRate);
+
   // mysong.rate(myRate);
 
 
